@@ -22,6 +22,9 @@ debug:
 		--advertise-client-urls=http://0.0.0.0:2379 \
 		--listen-client-urls=http://0.0.0.0:2379
 
+sh:
+	docker exec -it etcd sh
+
 start:
 	docker run --rm -it $(DOCKER_FLAGS) -d $(TARG)
 
@@ -49,3 +52,6 @@ test:
 clean:
 	-docker stop $(TARG)
 	-rm -rf ./etcd-data
+	-rm -rf ./etcd-node1-data
+	-rm -rf ./etcd-node2-data
+	-rm -rf ./etcd-node3-data

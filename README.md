@@ -17,6 +17,20 @@ $ curl curl 127.0.0.1:2379/v2/keys
 $ curl http://127.0.0.1:2379/v2/keys/message
 ```
 
+## Connect to host from docker container
+
+- Linux: 172.17.0.1
+- macOS: [docker.for.mac.localhost](https://docs.docker.com/docker-for-mac/networking/)
+- Windows: [docker.for.win.localhost](https://docs.docker.com/docker-for-windows/release-notes/)
+- Vagrant: 10.0.2.2
+
+<!--
+https://stackoverflow.com/questions/45461017/connect-to-host-mongodb-from-docker-container
+
+https://stackoverflow.com/questions/33777041/why-10-0-2-2-was-not-there-with-running-ifconfig
+https://www.douban.com/group/topic/15558388/
+-->
+
 ## Run Test
 
 ```

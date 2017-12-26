@@ -2,8 +2,8 @@
 # Use of this source code is governed by a Apache license
 # that can be found in the LICENSE file.
 
-name: 'node2'
+name: 'etcd-node2'
 data-dir: '/etcd-data'
 
-advertise-client-urls: http://0.0.0.0:2379
+advertise-client-urls: http://etcd-node2:2379
 listen-client-urls: http://0.0.0.0:2379

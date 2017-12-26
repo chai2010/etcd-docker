@@ -11,15 +11,19 @@ services:
   etcd-node1:
     image: "chai2010/etcd"
     volumes:
+    - ./etcd-conf:/etcd-conf
     - ./etcd-node1-data:/etcd-data
     ports:
     - "2379:2379" # only for debug
     command: [
-      "etcd", "--name=node1", "--data-dir=/etcd-data",
-      "--advertise-client-urls=http://0.0.0.0:2379",
-      "--listen-client-urls=http://0.0.0.0:2379",
-      #"--initial-advertise-peer-urls=http://etcddocker_etcd-node1_1:2380",
-      #"--listen-peer-urls=http://etcddocker_etcd-node1_1:2380",
+      "etcd", "-config-file=/etcd-conf/etcd-node1.yml"
+
+      #"etcd", "--name=node1", "--data-dir=/etcd-data",
+      #"--advertise-client-urls=http://0.0.0.0:2379",
+      #"--listen-client-urls=http://0.0.0.0:2379",
+
+      #"--initial-advertise-peer-urls=http://etcddocker_etcd-node3_1:2380",
+      #"--listen-peer-urls=http://etcddocker_etcd-node3_1:2380",
       #"--initial-cluster=http://etcddocker_etcd-node1_1:2380,http://etcddocker_etcd-node2_1:2380,http://etcddocker_etcd-node3_1:2380",
       #"--initial-cluster-state=new",
       #"--initial-cluster-token=etcd-token",
@@ -28,13 +32,17 @@ services:
   etcd-node2:
     image: "chai2010/etcd"
     volumes:
+    - ./etcd-conf:/etcd-conf
     - ./etcd-node2-data:/etcd-data
     command: [
+      #"etcd", "-config-file=/etcd-conf/etcd-node2.yml"
+
       "etcd", "--name=node2", "--data-dir=/etcd-data",
       "--advertise-client-urls=http://0.0.0.0:2379",
       "--listen-client-urls=http://0.0.0.0:2379",
-      #"--initial-advertise-peer-urls=http://etcddocker_etcd-node2_1:2380",
-      #"--listen-peer-urls=http://etcddocker_etcd-node2_1:2380",
+
+      #"--initial-advertise-peer-urls=http://etcddocker_etcd-node3_1:2380",
+      #"--listen-peer-urls=http://etcddocker_etcd-node3_1:2380",
       #"--initial-cluster=http://etcddocker_etcd-node1_1:2380,http://etcddocker_etcd-node2_1:2380,http://etcddocker_etcd-node3_1:2380",
       #"--initial-cluster-state=new",
       #"--initial-cluster-token=etcd-token",
@@ -43,11 +51,15 @@ services:
   etcd-node3:
     image: "chai2010/etcd"
     volumes:
+    - ./etcd-conf:/etcd-conf
     - ./etcd-node3-data:/etcd-data
     command: [
+      #"etcd", "–config-file=/etcd-conf/etcd-node1.yml"
+
       "etcd", "--name=node3", "--data-dir=/etcd-data",
       "--advertise-client-urls=http://0.0.0.0:2379",
       "--listen-client-urls=http://0.0.0.0:2379",
+
       #"--initial-advertise-peer-urls=http://etcddocker_etcd-node3_1:2380",
       #"--listen-peer-urls=http://etcddocker_etcd-node3_1:2380",
       #"--initial-cluster=http://etcddocker_etcd-node1_1:2380,http://etcddocker_etcd-node2_1:2380,http://etcddocker_etcd-node3_1:2380",

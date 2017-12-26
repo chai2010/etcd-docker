@@ -35,11 +35,11 @@ services:
     - ./etcd-conf:/etcd-conf
     - ./etcd-node2-data:/etcd-data
     command: [
-      #"etcd", "-config-file=/etcd-conf/etcd-node2.yml"
+      "etcd", "-config-file=/etcd-conf/etcd-node2.yml"
 
-      "etcd", "--name=node2", "--data-dir=/etcd-data",
-      "--advertise-client-urls=http://0.0.0.0:2379",
-      "--listen-client-urls=http://0.0.0.0:2379",
+      #"etcd", "--name=node2", "--data-dir=/etcd-data",
+      #"--advertise-client-urls=http://0.0.0.0:2379",
+      #"--listen-client-urls=http://0.0.0.0:2379",
 
       #"--initial-advertise-peer-urls=http://etcddocker_etcd-node3_1:2380",
       #"--listen-peer-urls=http://etcddocker_etcd-node3_1:2380",
@@ -54,11 +54,11 @@ services:
     - ./etcd-conf:/etcd-conf
     - ./etcd-node3-data:/etcd-data
     command: [
-      #"etcd", "–config-file=/etcd-conf/etcd-node1.yml"
+      "etcd", "-config-file=/etcd-conf/etcd-node3.yml"
 
-      "etcd", "--name=node3", "--data-dir=/etcd-data",
-      "--advertise-client-urls=http://0.0.0.0:2379",
-      "--listen-client-urls=http://0.0.0.0:2379",
+      #"etcd", "--name=node3", "--data-dir=/etcd-data",
+      #"--advertise-client-urls=http://0.0.0.0:2379",
+      #"--listen-client-urls=http://0.0.0.0:2379",
 
       #"--initial-advertise-peer-urls=http://etcddocker_etcd-node3_1:2380",
       #"--listen-peer-urls=http://etcddocker_etcd-node3_1:2380",

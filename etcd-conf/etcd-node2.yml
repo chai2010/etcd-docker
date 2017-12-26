@@ -5,5 +5,12 @@
 name: 'etcd-node2'
 data-dir: '/etcd-data'
 
-advertise-client-urls: http://etcd-node2:2379
+advertise-client-urls: http://etcddocker_etcd-node2_1:2379
 listen-client-urls: http://0.0.0.0:2379
+
+initial-advertise-peer-urls: http://etcddocker_etcd-node2_1:2380
+listen-peer-urls: http://0.0.0.0:2380
+
+initial-cluster: etcd-node1=http://etcddocker_etcd-node1_1:2380,etcd-node2=http://etcddocker_etcd-node2_1:2380,etcd-node3=http://etcddocker_etcd-node3_1:2380
+initial-cluster-state: new
+initial-cluster-token: etcd-token

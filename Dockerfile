@@ -9,6 +9,12 @@ FROM golang:1.9.2-alpine3.6 as builder
 
 RUN apk add --no-cache curl openssl
 
+WORKDIR /go/src/github.com/chai2010/etcd-docker/
+COPY . .
+
+# install ./myapp
+RUN go install ./myapp
+
 # download etcd-v3.2.12
 RUN mkdir -p /etcd-download && cd /etcd-download \
 	&& curl -L https://github.com/coreos/etcd/releases/download/v3.2.12/etcd-v3.2.12-linux-amd64.tar.gz | tar zx
@@ -28,6 +34,7 @@ FROM alpine:3.6
 COPY --from=builder /etcd-download/etcd-v3.2.12-linux-amd64/etcd    /usr/local/bin/etcd
 COPY --from=builder /etcd-download/etcd-v3.2.12-linux-amd64/etcdctl /usr/local/bin/etcdctl
 COPY --from=builder /go/bin/confd                                   /usr/local/bin/confd
+COPY --from=builder /go/bin/myapp                                   /usr/local/bin/myapp
 
 EXPOSE 2379 2380
 

@@ -40,19 +40,19 @@ confd-linux:
 	-curl http://127.0.0.1:2379/v2/keys/myapp/database/url -XPUT -d value="db.example.com"
 	-curl http://127.0.0.1:2379/v2/keys/myapp/database/user -XPUT -d value="rob"
 
-	docker run --rm -it $(DOCKER_CONFD_FLAGS) $(TARG) confd -backend etcd -node http://172.17.0.1:2379
+	docker run --rm -it $(DOCKER_CONFD_FLAGS) $(TARG) confd -watch -backend etcd -log-level=DEBUG -node http://172.17.0.1:2379
 
 confd-macos:
 	-curl http://127.0.0.1:2379/v2/keys/myapp/database/url -XPUT -d value="db.example.com"
 	-curl http://127.0.0.1:2379/v2/keys/myapp/database/user -XPUT -d value="rob"
 	
-	docker run --rm -it $(DOCKER_CONFD_FLAGS) $(TARG) confd -watch -backend etcd -node http://docker.for.mac.localhost:2379
+	docker run --rm -it $(DOCKER_CONFD_FLAGS) $(TARG) confd -watch -backend etcd -log-level=DEBUG -node http://docker.for.mac.localhost:2379
 
 confd-win:
 	-curl http://127.0.0.1:2379/v2/keys/myapp/database/url -XPUT -d value="db.example.com"
 	-curl http://127.0.0.1:2379/v2/keys/myapp/database/user -XPUT -d value="rob"
 	
-	docker run --rm -it $(DOCKER_CONFD_FLAGS) $(TARG) confd -backend etcd -node http://docker.for.win.localhost:2379
+	docker run --rm -it $(DOCKER_CONFD_FLAGS) $(TARG) confd -watch -backend etcd -log-level=DEBUG -node http://docker.for.win.localhost:2379
 
 start:
 	docker run --rm -it $(DOCKER_ETCD_FLAGS) -d $(TARG)

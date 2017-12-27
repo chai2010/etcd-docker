@@ -1,2 +1,6 @@
 /etcd-data
 /etcd-node*
+
+/conf-data/etc/hostname
+/conf-data/etc/hosts
+/conf-data/etc/resolv.conf

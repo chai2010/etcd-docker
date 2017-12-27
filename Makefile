@@ -7,16 +7,21 @@
 
 TARG:=chai2010/etcd
 
-DOCKER_FLAGS:=-p 2379:2379
-DOCKER_FLAGS+=-p 2380:2380
-DOCKER_FLAGS+=--volume=`pwd`/etcd-data:/etcd-data
-DOCKER_FLAGS+=--name etcd
+DOCKER_ETCD_FLAGS:=-p 2379:2379
+DOCKER_ETCD_FLAGS+=-p 2380:2380
+DOCKER_ETCD_FLAGS+=--volume=`pwd`/etcd-data:/etcd-data
+DOCKER_ETCD_FLAGS+=--name etcd
+
+DOCKER_CONFD_FLAGS:=
+DOCKER_CONFD_FLAGS+=-p 8080:8080
+DOCKER_CONFD_FLAGS+=--volume=`pwd`/conf-data/etc:/etc
+DOCKER_CONFD_FLAGS+=--name confd
 
 default:
-	docker run --rm -it $(DOCKER_FLAGS) $(TARG)
+	docker run --rm -it $(DOCKER_ETCD_FLAGS) $(TARG)
 
 debug:
-	docker run --rm -it $(DOCKER_FLAGS) -d $(TARG) etcd \
+	docker run --rm -it $(DOCKER_ETCD_FLAGS) -d $(TARG) etcd \
 		--name=node1 \
 		--data-dir=/etcd-data \
 		--advertise-client-urls=http://0.0.0.0:2379 \
@@ -25,8 +30,32 @@ debug:
 sh:
 	docker exec -it etcd sh
 
+up:
+	docker-compose up -d
+
+down:
+	docker-compose down
+
+confd-linux:
+	-curl http://127.0.0.1:2379/v2/keys/myapp/database/url -XPUT -d value="db.example.com"
+	-curl http://127.0.0.1:2379/v2/keys/myapp/database/user -XPUT -d value="rob"
+
+	docker run --rm -it $(DOCKER_CONFD_FLAGS) $(TARG) confd -backend etcd -node http://172.17.0.1:2379
+
+confd-macos:
+	-curl http://127.0.0.1:2379/v2/keys/myapp/database/url -XPUT -d value="db.example.com"
+	-curl http://127.0.0.1:2379/v2/keys/myapp/database/user -XPUT -d value="rob"
+	
+	docker run --rm -it $(DOCKER_CONFD_FLAGS) $(TARG) confd -watch -backend etcd -node http://docker.for.mac.localhost:2379
+
+confd-win:
+	-curl http://127.0.0.1:2379/v2/keys/myapp/database/url -XPUT -d value="db.example.com"
+	-curl http://127.0.0.1:2379/v2/keys/myapp/database/user -XPUT -d value="rob"
+	
+	docker run --rm -it $(DOCKER_CONFD_FLAGS) $(TARG) confd -backend etcd -node http://docker.for.win.localhost:2379
+
 start:
-	docker run --rm -it $(DOCKER_FLAGS) -d $(TARG)
+	docker run --rm -it $(DOCKER_ETCD_FLAGS) -d $(TARG)
 
 stop:
 	docker stop etcd

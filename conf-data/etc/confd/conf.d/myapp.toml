@@ -10,3 +10,6 @@ keys = [
     "/myapp/database/url",
     "/myapp/database/user",
 ]
+
+check_cmd = ""
+reload_cmd = "echo reload chai"

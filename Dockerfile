@@ -10,11 +10,14 @@ FROM alpine:3.6 as builder
 RUN apk add --no-cache curl openssl
 
 RUN curl -L https://github.com/coreos/etcd/releases/download/v3.2.12/etcd-v3.2.12-linux-amd64.tar.gz | tar zx
+RUN curl -L https://github.com/kelseyhightower/confd/releases/download/v0.14.0/confd-0.14.0-darwin-amd64 > /usr/local/bin/confd
+RUN chmod +x /usr/local/bin/confd
 
 FROM alpine:3.6
 
 COPY --from=builder /etcd-v3.2.12-linux-amd64/etcd    /usr/local/bin/etcd
 COPY --from=builder /etcd-v3.2.12-linux-amd64/etcdctl /usr/local/bin/etcdctl
+COPY --from=builder /usr/local/bin/confd              /usr/local/bin/confd
 
 EXPOSE 2379 2380
 

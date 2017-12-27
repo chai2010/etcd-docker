@@ -4,3 +4,5 @@
 /conf-data/etc/hostname
 /conf-data/etc/hosts
 /conf-data/etc/resolv.conf
+
+/conf-data/etc/myapp/myapp.json

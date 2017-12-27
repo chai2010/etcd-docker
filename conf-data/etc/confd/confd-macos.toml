@@ -1,0 +1,14 @@
+# Copyright 2017 <chaishushan{AT}gmail.com>. All rights reserved.
+# Use of this source code is governed by a BSD license
+# that can be found in the LICENSE file.
+
+# https://github.com/kelseyhightower/confd/blob/master/docs/configuration-guide.md
+
+log-level = "DEBUG"
+
+watch = true
+
+backend = "etcd"
+nodes = [
+  "http://docker.for.mac.localhost:2379",
+]

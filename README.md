@@ -1,4 +1,4 @@
-# etcd-v3 docker image
+# [etcd-v3](https://coreos.com/etcd/)/[confd](https://github.com/kelseyhightower/confd) docker image
 
 [![Docker Build Status](https://img.shields.io/docker/build/chai2010/etcd.svg)](https://hub.docker.com/r/chai2010/etcd/)
 [![License](http://img.shields.io/badge/license-apache%20v2-blue.svg)](https://github.com/openpitrix/openpitrix/blob/master/LICENSE)
@@ -33,6 +33,25 @@ $ curl http://127.0.0.1:2379/v2/keys/message
 
 # get from other etcd node
 $ curl 127.0.0.1:3379/v2/keys
+```
+
+## Quick Guide (confd/etcd)
+
+```shell
+# start etcd, 3 nodes
+$ docker-compose up -d
+
+# start confd on macOS
+# windows: make confd-win
+# linux: make confd-linux
+$ make confd-macos
+
+# view generated ./conf-data/etc/myapp/myapp.json
+
+# change config value in etcd
+$ curl http://127.0.0.1:2379/v2/keys/myapp/database/user -XPUT -d value="new value"
+
+# view generated ./conf-data/etc/myapp/myapp.json
 ```
 
 ## Connect to host from docker container

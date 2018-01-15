@@ -12,6 +12,11 @@ DOCKER_ETCD_FLAGS+=-p 2380:2380
 DOCKER_ETCD_FLAGS+=--volume=`pwd`/etcd-data:/etcd-data
 DOCKER_ETCD_FLAGS+=--name etcd
 
+DOCKER_METAD_FLAGS:=
+DOCKER_METAD_FLAGS+=-p 9611:9611
+DOCKER_METAD_FLAGS+=-p 9080:8080
+DOCKER_METAD_FLAGS+=--name metad
+
 DOCKER_CONFD_FLAGS:=
 DOCKER_CONFD_FLAGS+=-p 8080:8080
 DOCKER_CONFD_FLAGS+=--volume=`pwd`/conf-data/etc:/etc
@@ -35,6 +40,14 @@ up:
 
 down:
 	docker-compose down
+
+metad-macos:
+	docker run --rm -it $(DOCKER_METAD_FLAGS) $(TARG) metad \
+		--backend etcdv3 \
+		--nodes http://docker.for.mac.localhost:2379 \
+		--log_level debug \
+		--listen :8080 \
+		--xff
 
 confd-linux:
 	-curl http://127.0.0.1:2379/v2/keys/myapp/database/url -XPUT -d value="db.example.com"
